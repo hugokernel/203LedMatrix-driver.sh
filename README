@@ -1,0 +1,25 @@
+
+Bash driver for https://github.com/hugokernel/203LedMatrix
+
+Example code :
+
+#!/bin/bash
+SPEED=9
+SPACING=0
+INTENSITY=1
+DIRECTION=1
+WATCHDOG=4
+DEVICE="/dev/ttyS1"
+PARAM="-v 0"
+
+# Set configuration
+./ledmatrix-driver.sh -V -x "$DEVICE" "$PARAM" -s $SPEED -l $SPACING -i $INTENSITY -w $WATCHDOG
+
+while true;
+do
+    content="`uptime` - Free `df /home | awk '{ print $5 }' | tail -n 1`"
+
+    # Send text for screen
+    ./ledmatrix-driver.sh -V -x "$DEVICE" -m "$content"
+    sleep 30
+done
